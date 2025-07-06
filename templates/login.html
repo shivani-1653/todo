@@ -3,23 +3,22 @@
   <head>
     <title>Login page</title>
     <style>
+      
       body {
-        margin: 0;
-        padding: 0;
-        background-image: url("{{ url_for('static', filename='todo1.jpeg') }}");
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-image: url(todo1.jpeg);
+  margin: 0;
+  padding: 0;
+  background-image: url("{{ url_for('static', filename='p.jpg') }}");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
 
-        background-position: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        overflow: hidden;
-        position: relative;
-      }
       .bg-image {
         position: absolute;
         top: 0;

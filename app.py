@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from flask_mysqldb import MySQL
 
-app = Flask(__name__, static_folder='templates')
+app = Flask(__name__)
 
 # MySQL Config
 app.config['MYSQL_HOST'] = 'localhost'
@@ -10,6 +10,10 @@ app.config['MYSQL_PASSWORD'] = 'P@ssword1'
 app.config['MYSQL_DB'] = 'to_dos'
 
 mysql = MySQL(app)
+
+@app.route('/')
+def index():
+    return redirect('/login')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -32,7 +36,6 @@ def login():
         else:
             return "❌ Incorrect email or password."
 
-    # GET method – just show login form
     return render_template('login.html')
 
 if __name__ == '__main__':

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>To-Do List - Categories</title>
+  </head>
+  <style>
+    body {
+      font-family: Georgia, "Times New Roman", Times, serif, sans-serif;
+      background-color: #f5d6d6;
+      margin: 100px;
+      text-align: center;
+      background-size: cover;
+      background-image: url(todo.jpg.jpeg);
+      background-repeat: no-repeat; /* Prevent tiling */
+      background-position: center;
+      background: linear-gradient(to bottom right, #ffe4e1,  #ffe6f0);
+    }
+
+    h1 {
+      color: #e80975;
+      background-color: rgb(237, 230, 234);
+      padding: 30px;
+      box-shadow: 0 4px 8px rgb(33, 6, 23);
+      border-radius: 20px;
+      display: inline-block;
+    }
+    h2 {
+      color: #8a0344;
+      font-size: medium;
+      background-color: rgb(245, 186, 209);
+      text-align: center;
+      border-radius: 15px;
+      margin: auto;
+      margin-bottom: 20px;
+      padding: 10px;
+      width: 200px;
+      display: block;
+      gap: 10px;
+    }
+    .card-container {
+      display: grid block;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      padding: 20px;
+      margin: 40px;
+    }
+
+    .card {
+      flex: 0 0 200px;
+      background-color: rgb(211, 36, 106);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 8px rgb(37, 2, 20);
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.12);
+      background-color: rgb(244, 36, 119);
+    }
+
+    .card h3 {
+      color: #f8f8f8;
+      margin: 0;
+    }
+    .input-grp {
+      margin: 10px;
+    }
+    input[type="text"] {
+      background-color: #fffdfe;
+      color: #510538;
+      box-shadow: #1f1313;
+      border-radius: 16px;
+      padding: 9px;
+      border: #2f0217;
+      font-style: oblique;
+    }
+
+    input[type="submit"] {
+      background-color: #e42873;
+      border: #8e265f;
+      color: #070004;
+      border-radius: 16px;
+      padding: 9px;
+    }
+    input[type="submit"]:hover {
+      transform: scale(1.1);
+      background-color: #f33d7a;
+    }
+  </style>
+
+  <body>
+    <h1>Categories ▽</h1>
+
+    <h2>Create a New Category!</h2>
+    <div class="input-grp">
+      <form>
+        <input type="text" placeholder="Enter a new category.." required />
+        <input type="submit" value="Create" />
+      </form>
+    </div>
+
+    <div class="card-container">
+      <a href="work.html" style="text-decoration: none">
+        <div class="card">
+          <h3>Work 🏢</h3>
+        </div>
+      </a>
+      <a href="personal.html" style="text-decoration: none">
+        <div class="card">
+          <h3>Personal🤞</h3>
+        </div>
+      </a>
+      <a href="travel.html" style="text-decoration: none">
+        <div class="card">
+          <h3>Travel✈️</h3>
+        </div>
+      </a>
+      <a href="shopping.html" style="text-decoration: none">
+        <div class="card">
+          <h3>Shopping🛍️</h3>
+        </div>
+      </a>
+    </div>
+  </body>
+</html>

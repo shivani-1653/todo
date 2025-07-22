@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>To-Do List - Pinterest Style</title>
+    <style>
+      body {
+        background-color: #ffe4e1;
+        font-family: "Segoe UI", sans-serif;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      h2 {
+        background-color: #fce4ec;
+        color: #d81b60;
+        padding: 15px 40px;
+        border-radius: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        font-size: 28px;
+        margin-bottom: 40px;
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+      }
+
+      h2:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      }
+
+      .new-category {
+        background-color: #f8bbd0;
+        padding: 10px 30px;
+        border-radius: 20px;
+        font-size: 20px;
+        color: #880e4f;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        transition: all 0.4s ease;
+      }
+
+      .new-category:hover {
+        transform: scale(1.1);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      }
+
+      .input-group {
+        margin-bottom: 40px;
+      }
+
+      input[type="text"] {
+        padding: 10px 20px;
+        border: 2px solid #d81b60;
+        border-radius: 20px;
+        font-size: 16px;
+        outline: none;
+      }
+
+      input[type="submit"] {
+        padding: 10px 20px;
+        background-color: #f06292;
+        border: none;
+        border-radius: 20px;
+        color: white;
+        font-size: 16px;
+        margin-left: 10px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      input[type="submit"]:hover {
+        transform: scale(1.1);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .categories {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px;
+      }
+
+      .category {
+        background-color: #ec407a;
+        padding: 30px 50px;
+        border-radius: 30px;
+        color: white;
+        font-size: 22px;
+        font-weight: bold;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        cursor: pointer;
+      }
+
+      .category:hover {
+        transform: scale(1.15) rotate(-3deg);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Categories ▽</h2>
+
+    <div class="new-category">Create a New Category!</div>
+
+    <div class="input-group">
+      <form>
+        <input type="text" placeholder="Enter category name..." required />
+        <input type="submit" value="Create" />
+      </form>
+    </div>
+
+    <div class="categories">
+      <div class="category">Work 📖</div>
+      <div class="category">Personal ✌</div>
+      <div class="category">Travel ✈</div>
+      <div class="category">Shopping 🛍</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>To-Do List - Categories</title>
+    <style>
+      body {
+        font-family: Georgia, "Times New Roman", Times, serif, sans-serif;
+        margin: 100px;
+        padding: 0;
+        text-align: center;
+        background-size: cover;
+        background-image: url("{{ url_for('static', filename='todo.jpeg') }}");
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+
+      h1 {
+        color: #e80975;
+        background-color: rgb(237, 230, 234);
+        padding: 30px;
+        box-shadow: 0 4px 8px rgb(33, 6, 23);
+        border-radius: 20px;
+        display: inline-block;
+      }
+
+      h2 {
+        color: #8a0344;
+        font-size: medium;
+        background-color: rgb(255, 203, 216);
+        text-align: center;
+        border-radius: 15px;
+        margin: auto;
+        margin-bottom: 20px;
+        padding: 10px;
+        width: 200px;
+        display: block;
+        gap: 10px;
+      }
+
+      .card-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+        width: fit-content;
+        max-width: 900px;
+        padding: 20px;
+        margin: 40px;
+      }
+
+      .card {
+        background-color: rgb(211, 36, 106);
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 4px 8px rgb(37, 2, 20);
+        transition: transform 0.3s;
+        position: relative;
+      }
+
+      .card:hover {
+        transform: scale(1.12);
+        background-color: rgb(244, 36, 119);
+      }
+
+      .card h3 {
+        color: #f8f8f8;
+        margin: 0;
+      }
+
+      .input-grp {
+        margin: 10px;
+      }
+
+      input[type="text"] {
+        background-color: #fffdfe;
+        color: #510538;
+        box-shadow: #1f1313;
+        border-radius: 16px;
+        padding: 9px;
+        border: #2f0217;
+        font-style: oblique;
+      }
+
+      input[type="submit"] {
+        background-color: #e42873;
+        border: #8e265f;
+        color: #070004;
+        border-radius: 16px;
+        padding: 9px;
+      }
+
+      input[type="submit"]:hover {
+        transform: scale(1.1);
+        background-color: #f33d7a;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-top: 40px;
+      }
+
+      .section-header h4 {
+        color: #a70252;
+        font-size: 20px;
+        font-style: bold;
+        background-color: rgb(253, 231, 239);
+        display: inline-block;
+        border-radius: 18px;
+        padding: 15px 25px;
+        box-shadow: 0 4px 8px rgb(33, 6, 23);
+      }
+
+      .delete-form {
+        position: absolute;
+        top: 8px;
+        right: 10px;
+      }
+
+      .delete-btn {
+        background-color: rgb(250, 246, 246);
+        color: red;
+        border: none;
+        font-size: 18px;
+        border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        cursor: pointer;
+        line-height: 0;
+        padding: 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      .delete-btn:hover {
+        background-color: rgb(212, 209, 209);
+      }
+      .category-button {
+        display: block;
+
+        width: 100; /* Fixed width */
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Categories ▽</h1>
+
+    <h2>Create a New Category!</h2>
+    <div class="input-grp">
+      <form method="POST" action="/todo2">
+        <input
+          type="text"
+          name="category_name"
+          placeholder="Enter a new category.."
+          required
+        />
+        <input type="submit" value="Create" />
+      </form>
+    </div>
+
+    <!-- Static Categories (emoji cards) -->
+    <div class="card-container">
+      <a href="{{ url_for('work') }}" style="text-decoration: none">
+        <div class="card">
+          <h3>Work 🏢</h3>
+        </div>
+      </a>
+      <a href="{{ url_for('personal') }}" style="text-decoration: none">
+        <div class="card">
+          <h3>Personal 🤞</h3>
+        </div>
+      </a>
+      <a href="{{ url_for('travel') }}" style="text-decoration: none">
+        <div class="card">
+          <h3>Travel ✈️</h3>
+        </div>
+      </a>
+      <a href="{{ url_for('shopping') }}" style="text-decoration: none">
+        <div class="card">
+          <h3>Shopping 🛍️</h3>
+        </div>
+      </a>
+    </div>
+
+    <!-- Custom Categories Heading -->
+    <div class="section-header">
+      <h4>Your Custom Categories</h4>
+    </div>
+
+    <!-- Custom Categories Cards -->
+    <div class="card-container">
+      {% for category in custom_categories %}
+      <div class="card">
+        <form method="POST" action="/delete_category" class="delete-form">
+          <input type="hidden" name="category_name" value="{{ category[0] }}" />
+          <button type="submit" class="delete-btn">−</button>
+        </form>
+        <h3>{{ category[0] }}</h3>
+      </div>
+      {% endfor %}
+    </div>
+  </body>
+</html>

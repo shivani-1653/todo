@@ -5,38 +5,43 @@
   </head>
   <style>
     body {
-      font-size: 23px;  
-      font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      font-size: 23px;
+      font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+        sans-serif;
       text-align: left;
       background-color: hsl(330, 17%, 93%);
       margin: 100px;
-    
+      font-style: italic;
       width: 490px;
       height: 420px;
       color: rgb(81, 17, 38);
-      background-size:cover;
-      background-image: url(p1.jpg);
+      background-size: cover;
+      background-image: url("static/p1.jpg");
       background-repeat: no-repeat;
-      background-position:center;
+      background-position: center;
       background: linear-gradient(to bottom right, #ffe4e1,  #ffe6f0);
-      
     }
-     h1{margin-top: 9px;color:rgb(103, 12, 83);
+    h1 {
+      margin-top: 9px;
+      color: rgb(103, 12, 83);
       margin-bottom: 20px;
       position: relative;
       background-color: rgb(248, 254, 255);
-      display:inline-flexbox;
+      display: inline-flexbox;
       padding: 8px;
-      box-shadow:0 4px 8px rgb(33, 6, 23);
-      border-radius: 20px;inline-size:252px;
-     }
+      box-shadow: 0 4px 8px rgb(33, 6, 23);
+      border-radius: 20px;
+      inline-size: 252px;
+    }
     label.toggle {
       color: #67014d;
-      font-size: 22px;font-weight: bold;
+      font-size: 22px;
+      font-weight: bold;
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       font-style: italic;
       cursor: pointer;
-      margin-top: 1px;margin-bottom: l3px ;
+      margin-top: 1px;
+      margin-bottom: l3px;
       display: inline-block;
       transition: transform(0.6s);
       border-radius: 20px;
@@ -47,20 +52,18 @@
       transition: scale(1.5);
     }
     input[type="checkbox"] {
-        display:none;
-
+      display: none;
     }
-    .task-form{
-        margin:40px;
-        display: none;
-        
+    .task-form {
+      margin: 40px;
+      display: none;
     }
-    input[type="checkbox"]:checked+label+.task-form {
-        display:block;
-
-    } 
+    input[type="checkbox"]:checked + label + .task-form {
+      display: block;
+    }
     input[type="text"] {
-      padding: 10px;font-size: medium;
+      padding: 10px;
+      font-size: medium;
       border: 1px solid #08043b;
       border-radius: 10px;
       width: 250px;
@@ -70,29 +73,56 @@
       font-style: oblique;
       color: #201a56;
     }
-     input[type="submit"] {
-      padding: 10px 20px; row-gap:2px;
+    input[type="submit"] {
+      padding: 10px 20px;
+      row-gap: 2px;
       margin-left: 10px;
       border: none;
       border-radius: 10px;
-      background-color:#6f094d;
-   
+      background-color: #6f094d;
+
       color: rgb(240, 240, 240);
-      transition: transform(0.3s);
+      transition: transform 0.3s ease;
     }
 
     input[type="submit"]:hover {
-      background-color:#7b175a;} 
-    </style>
+      background-color: #7b175a;
+      transform: scale(1.15);
+    }
+    ul {
+      list-style-type: circle;
+      margin-top: 20px;
+      padding-left: 30px;
+    }
+    li {
+      margin-bottom: 10px;
+      font-weight: 500;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+  </style>
   <body>
     <h1>Personal📒</h1>
     <input type="checkbox" id="toggleTask" />
     <label for="toggleTask" class="toggle">+ Create tasks..</label>
     <div class="task-form">
-        <form>
-          <input type="text" placeholder="Enter your task..." required />
-          <input type="submit" value="Add Task" />
-        </form>
-       
+      <form method="POST" action="/personal">
+        <input
+          type="text"
+          name="task"
+          placeholder="Enter your task..."
+          required
+        />
+        <input type="submit" value="Add Task" />
+      </form>
+    </div>
+    {% if tasks %}
+    <ul>
+      {% for task in tasks %}
+      <li>{{ task[1] }}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>No tasks added yet..</p>
+    {% endif %}
   </body>
 </html>

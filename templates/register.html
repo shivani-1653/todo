@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>login page</title>
+    <title>Register Page</title>
     <style>
       body {
         margin: 0;
@@ -18,20 +18,10 @@
         position: relative;
       }
 
-      .bg-image {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: -1;
-      }
-
       .card-container {
         padding: 30px;
         background-color: #ffdada;
-        width: 350px;
+        width: 400px;
         border-radius: 30px;
         justify-content: center;
         align-items: center;
@@ -48,90 +38,72 @@
       .card h1 {
         text-align: center;
         font-size: xx-large;
+        font-style: "Poppins", sans-serif;
         color: #c52d5d;
         margin: 0 auto;
         border: solid #2e0317;
-        width: 150px;
+        width: 180px;
         align-items: center;
-
         display: grid;
         background-color: white;
-
         border-radius: 15px;
         padding: 10px;
       }
-      .card h2 {
-        color: #be0647;
-        font-size: small;
-        align-items: center;
-        font-style: italics;
-        text-align: center;
-        transition: 0.2s ease;
-        row-gap: 20px;
-      }
+
       .input-row {
         display: flex;
         align-items: center;
-
         margin: 10px 0;
       }
 
       label {
         color: rgb(178, 52, 94);
         font-size: large;
-        width: 100px;
+        width: 120px;
       }
 
-      input[type="text"] {
-        padding: 10px;
-        border-radius: 10px;
-        font-style: italic;
-        color: #560625;
-        background-color: whitesmoke;
-        border: 1px solid #ccc;
-        bottom: 1px;
-      }
+      input[type="text"],
+      input[type="email"],
       input[type="password"] {
         padding: 10px;
-        display: grid;
+        text-align: center;
         border-radius: 10px;
         font-style: italic;
         color: #02210d;
         background-color: whitesmoke;
         border: 1px solid #ccc;
-        bottom: 1px;
+        width: 40%;
       }
+
       input[type="submit"] {
         background-color: #c52d5d;
         margin: auto;
         color: white;
         font-size: medium;
+        column-gap: 9px;
+        gap: 10px;
         font-style: normal;
         border-radius: 12px;
-
-        display: block;
         box-shadow: #2e0317;
         border: 1px solid #ccc;
         align-items: center;
         justify-content: center;
-        padding: 10px 10px;
-        transition: 0.2s ease;
+        padding: 10px;
+        transition: 0.3s ease;
+        cursor: pointer;
       }
+
       input[type="submit"]:hover {
         background-color: #c2065e;
-        transform: scale(1.1);
-      }
-      .card h2:hover {
-        color: #e30951;
-        transform: scale(1.1);
+        transform: scale(1.05);
       }
     </style>
   </head>
   <body>
     <div class="card-container">
       <div class="card">
-        <h1>Login</h1>
-        <form method="POST" action="/login">
+        <h1>Register</h1>
+        <form method="POST" action="/register">
           <div class="input-row">
             <label for="username">Username:</label>
             <input
@@ -142,10 +114,11 @@
               required
             />
           </div>
+
           <div class="input-row">
             <label for="email">Email:</label>
             <input
-              type="text"
+              type="email"
               id="email"
               name="email"
               placeholder="Enter your email.."
@@ -159,18 +132,15 @@
               type="password"
               id="password"
               name="password"
-              placeholder="Enter your password.."
+              placeholder="Enter a password.."
               autocomplete="new-password"
               required
             />
           </div>
           <div class="input-row">
-            <input type="submit" value="Login" />
+            <input type="submit" value="Register" />
           </div>
         </form>
-        <a href="{{ url_for('register') }}" style="text-decoration: none">
-          <h2>Create account? Sign up.</h2>
-        </a>
       </div>
     </div>
   </body>

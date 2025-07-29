@@ -60,11 +60,13 @@ def register():
         cursor.execute("INSERT INTO users2 (username, email, password) VALUES (%s, %s, %s)", 
                        (username, email, hashed_password))
         mysql.connection.commit()
+        cursor.execute("SELECT * FROM users2 WHERE email = %s", (email,))
+        new_user = cursor.fetchone()
         cursor.close()
 
-        session['username'] = username
+        session['username'] = new_user[1]
+        session['user_id'] = new_user[0]
         return redirect(url_for('welcome'))
-
     return render_template('register.html')
 
 @app.route('/welcome')
@@ -72,6 +74,7 @@ def welcome():
     if 'username' not in session:
         return redirect(url_for('login'))
     return render_template('welcome.html', username=session['username'])
+
 @app.route('/todo2', methods=['GET', 'POST'])
 def todo2():
     if 'username' not in session:
@@ -216,7 +219,7 @@ def shopping():
     
     return render_template('shopping.html', username=session['username'], tasks=tasks)
     
-@app.route('/delete_category', methods=['POST'])
+@app.route('/delete__category', methods=['POST'])
 def delete_category():
     category_name = request.form['category_name']
     user_id = session['user_id']
@@ -239,24 +242,100 @@ def delete_category():
 @app.route('/complete_task', methods=['POST'])
 def complete_task():
     task_id = request.form.get('task_id')
+    category = request.form.get('category')
     cursor = mysql.connection.cursor()
     cursor.execute("UPDATE task3 SET status = 'completed' WHERE task_id = %s", (task_id,))
     mysql.connection.commit()
     cursor.close()
     flash('Task marked as completed!', 'success')
+    if category in ['work', 'personal', 'travel', 'shopping']:
+        return redirect(url_for(category))
+    else:
+        return redirect(url_for('category_page', category_name=category))
    
-    return redirect(url_for('travel')) 
+    return redirect(url_for('category_page', category_name=category))
 
 @app.route('/delete_task', methods=['POST'])
 def delete_task():
     task_id = request.form['task_id']
+    category = request.form.get('category')
     cursor = mysql.connection.cursor()
-    cursor.execute("DELETE FROM task3 WHERE id = %s", (task_id,))
+    cursor.execute("DELETE FROM task3 WHERE task_id = %s", (task_id,))
+
     mysql.connection.commit()
     cursor.close()
     flash("Task deleted!", "danger")
+    if category in ['work', 'personal', 'travel', 'shopping']:
+        return redirect(url_for(category))  # <-- redirect to /work, /personal
+    else:
+        return redirect(url_for('category_page', category_name=category))
    
-    return redirect(url_for('travel'))
+    return redirect(url_for('category_page', category_name=category))
+
+@app.route('/category/<category_name>', methods=['GET', 'POST'])
+def category_page(category_name):
+    if 'username' not in session:
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+
+    # Check if static
+    static_categories = ['work', 'personal', 'travel', 'shopping']
+
+    # Validate if category exists for this user (for dynamic)
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT cname FROM categories3 WHERE cname = %s AND user_id = %s", (category_name, user_id))
+    custom_category = cursor.fetchone()
+    cursor.close()
+
+    # Handle POST (Add Task)
+    if request.method == 'POST':
+        task = request.form.get('task')
+        if task:
+            cursor = mysql.connection.cursor()
+            cursor.execute("INSERT INTO task3 (title, user_id, category) VALUES (%s, %s, %s)",
+                           (task, user_id, category_name))
+            mysql.connection.commit()
+            cursor.close()
+            return redirect(url_for('category_page', category_name=category_name))
+
+    # Fetch tasks
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT task_id, title, status FROM task3 WHERE user_id = %s AND category = %s ORDER BY created_at DESC",
+                   (user_id, category_name))
+    tasks = cursor.fetchall()
+    cursor.close()
+
+    # Render correct template
+    if category_name in static_categories:
+        return render_template(f'{category_name}.html', username=session['username'], tasks=tasks)
+    elif custom_category:
+        return render_template('category.html', username=session['username'], tasks=tasks, category_name=category_name)
+    else:
+        flash("Invalid category!", "danger")
+        return redirect(url_for('todo2'))
+
+
+@app.route("/clear_category/<category>", methods=["POST"])
+def clear_category(category):
+    if 'username' not in session:
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+
+    # Delete all tasks
+    cursor = mysql.connection.cursor()
+    cursor.execute("DELETE FROM task3 WHERE category = %s AND user_id = %s", (category, user_id))
+    mysql.connection.commit()
+    cursor.close()
+    flash(f"✅ All tasks in {category.title()} cleared!", "success")
+
+    # ✅ If it's a static category, redirect to its route
+    if category in ['work', 'personal', 'travel', 'shopping']:
+        return redirect(url_for(category))  # /work, /personal, etc.
+    else:
+        return redirect(url_for('category_page', category_name=category))
+
 
 
 if __name__ == '__main__':

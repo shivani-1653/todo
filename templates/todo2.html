@@ -9,7 +9,7 @@
         padding: 0;
         text-align: center;
         background-size: cover;
-        background-image: url("{{ url_for('static', filename='todo.jpeg') }}");
+        background-image: url("{{ url_for('static', filename='t1.png') }}");
         background-repeat: no-repeat;
         background-position: center;
       }
@@ -83,7 +83,7 @@
       input[type="submit"] {
         background-color: #e42873;
         border: #8e265f;
-        color: #070004;
+        color: #f1f0f1;
         border-radius: 16px;
         padding: 9px;
       }
@@ -99,14 +99,15 @@
       }
 
       .section-header h4 {
-        color: #a70252;
-        font-size: 20px;
+        color: rgb(246, 15, 130);
+        font-size: x-large;
         font-style: bold;
-        background-color: rgb(253, 231, 239);
+        background-color: #ffffff;
         display: inline-block;
         border-radius: 18px;
+        border: 1px solid black;
         padding: 15px 25px;
-        box-shadow: 0 4px 8px rgb(33, 6, 23);
+        box-shadow: 0 4px 8px rgb(3, 2, 2);
       }
 
       .delete-form {
@@ -188,13 +189,26 @@
     <!-- Custom Categories Cards -->
     <div class="card-container">
       {% for category in custom_categories %}
-      <div class="card">
-        <form method="POST" action="/delete_category" class="delete-form">
-          <input type="hidden" name="category_name" value="{{ category[0] }}" />
-          <button type="submit" class="delete-btn">−</button>
-        </form>
-        <h3>{{ category[0] }}</h3>
-      </div>
+      <a
+        href="{{ url_for('category_page', category_name=category[0]) }}"
+        style="text-decoration: none"
+      >
+        <div class="card">
+          <form
+            method="POST"
+            action="{{ url_for('delete_category') }}"
+            class="delete-form"
+          >
+            <input
+              type="hidden"
+              name="category_name"
+              value="{{ category[0] }}"
+            />
+            <button type="submit" class="delete-btn">−</button>
+          </form>
+          <h3>{{ category[0] }}</h3>
+        </div>
+      </a>
       {% endfor %}
     </div>
   </body>
